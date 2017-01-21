@@ -37,13 +37,14 @@ int hasOpt(int argc,char **argv, char op){
   return 0;
 }
 
+
 int getOptValue(int argc,char **argv, char op){
   int i,value;
   for(i=0;i<argc;i++){
     if(strstr(argv[i], "-")){
       if(strchr(argv[i], op)){
         value = atoi(argv[i+1]);
-        // printf("Value %i",value);
+        printf("Value %i",value);
         return value;
       }
     }
@@ -59,7 +60,7 @@ int getOptValue(int argc,char **argv, char op){
 int main(int argc, char *argv[]) {
   // Reading dictionary john file (john.txt)
   FILE *file = NULL;
-  int valueOpW = getOptValue(argc,argv,'w');
+  int valueOpW = 0;
   char line[BUFFER_MAX_LENGTH+1];
   int tempChar;
   int lines = 0;
@@ -67,9 +68,32 @@ int main(int argc, char *argv[]) {
   int i=0;
 
 
-
   if (argc >= 2){
        file = fopen(argv[1], "r");
+       for(i=0;i<argc;i++){
+         if(strstr(argv[i], "-")){
+           switch(argv[i][1]) {
+             default :
+                 fprintf(stderr, "error: unknown argument -%c\n"
+                                 "usage: suniq john.txt [-c | -w | -i]\n", argv[i][1]);
+                 return EXIT_FAILURE;
+              case 'w':
+                valueOpW = getOptValue(argc,argv,'w');
+                 if(valueOpW <= 0){
+                   fprintf(stderr, "error: unknown number of lines for arg -%c\n"
+                                   "usage: suniq john.txt -w [number]\n", argv[i][1]);
+                   return EXIT_FAILURE;
+                 }
+
+                 break;
+              case 'c':
+                 break;
+              case 'i':
+                 break;
+
+           }
+         }
+       }
       //  if(hasOpt(argc,argv,'w')==1){
       //    printf("Hast Option w\n");
       //    printf("Value for w is %i\n",valueOpW);
