@@ -32,3 +32,6 @@ calvin
 changeme
 diamond
 baseball
+baseball
+bears
+we
