@@ -23,15 +23,13 @@ int main(int argc, char const *argv[])
 	// int int_arr[1] = {5};
 	struct ListNode *head = NULL;
 	//transform array to linked list
-	// head = append_node(head,5);
-	// head = append_node(head,4);
-	// head = append_node(head,3);
+
   for(int i = 0; i < 6; i++){
 		head = append_node(head,int_arr[i]);
 	}
 
     //insertion sort
-    // head = insertionSortList(head);
+    head = insertionSortList(head);
 
     //Print the list
     /*
@@ -44,8 +42,6 @@ int main(int argc, char const *argv[])
      6
      */
 	struct ListNode *node = head;
-	// printf("%d\n",node->val);
-	// printf("%d\n",node->next->next->val);
 	while(node != NULL){
 		printf("%d\n",node->val);
 		node = node->next;
@@ -56,6 +52,11 @@ int main(int argc, char const *argv[])
 	return 0;
 }
 
+/*
+First created the newnode and allocate the memory for that node. Before
+there was no allocation
+NewNode code was repeating in if and else
+*/
 struct ListNode* append_node(struct ListNode* head, int val){
 	struct ListNode *newNode;
 	newNode = (struct ListNode*)malloc(sizeof(struct ListNode));
