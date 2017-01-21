@@ -3,7 +3,6 @@
 #include <string.h>
 #include <ctype.h>
 #define BUFFER_MAX_LENGTH 256
-
 void normal_output(int rows, char p[][BUFFER_MAX_LENGTH+1]){
   int i,j;
   // printf("\n");
@@ -38,15 +37,29 @@ int hasOpt(int argc,char **argv, char op){
   return 0;
 }
 
+int getOptValue(int argc,char **argv, char op){
+  int i,value;
+  for(i=0;i<argc;i++){
+    if(strstr(argv[i], "-")){
+      if(strchr(argv[i], op)){
+        value = atoi(argv[i+1]);
+        // printf("Value %i",value);
+        return value;
+      }
+    }
+  }
+  return 0;
+}
+
 
 // Implement
 // (DONE)-c Precede each output line with the count of the number of times the line occurred in the input, followed by a single space.
 // (DONE)-i Case insensitive comparison of lines.
 // -w compare no more than N characters in lines
 int main(int argc, char *argv[]) {
-
   // Reading dictionary john file (john.txt)
   FILE *file = NULL;
+  int valueOpW = getOptValue(argc,argv,'w');
   char line[BUFFER_MAX_LENGTH+1];
   int tempChar;
   int lines = 0;
@@ -54,10 +67,12 @@ int main(int argc, char *argv[]) {
   int i=0;
 
 
+
   if (argc >= 2){
        file = fopen(argv[1], "r");
       //  if(hasOpt(argc,argv,'w')==1){
       //    printf("Hast Option w\n");
+      //    printf("Value for w is %i\n",valueOpW);
       //  }
       //  if(hasOpt(argc,argv,'c')==1){
       //    printf("Hast Option c\n");
@@ -128,33 +143,50 @@ int main(int argc, char *argv[]) {
   {
     for (d = 0 ; d < lines - c - 1; d++)
     {
+
       if (strcmp(array[d],array[d+1])< 0)
       {
         strncpy(swap, array[d], BUFFER_MAX_LENGTH + 1);
         strncpy(array[d], array[d+1], BUFFER_MAX_LENGTH + 1);
         strncpy(array[d+1], swap, BUFFER_MAX_LENGTH + 1);
       }
+
     }
   }
   // printf("Sorted:\n");
   // normal_output(lines,array);
   // Remove duplicated
-  char tempValue[BUFFER_MAX_LENGTH + 1];
+
   int countRemoved = 0;
+  int buffer;
+  if(hasOpt(argc,argv,'w')==1){
+    buffer = valueOpW;
+  }else{
+    buffer = BUFFER_MAX_LENGTH + 1;
+  }
+  char temp[buffer];
+  char v1[buffer];
+  char v2[buffer];
+
   for(c=0;c<lines - 1;c++){
-    if (c>0 && strcmp(array[c],tempValue) == 0){
+    strncpy(v1, array[c],buffer);
+    strncpy(v2, array[c+1],buffer);
+    if (c>0 && strcmp(v1,temp) == 0){
       strcpy(array[c], "");
       countRemoved++;
       continue;
     }
-    if (strcmp(array[c],array[c+1]) == 0){
+    if (strcmp(v1,v2) == 0){
       // Empty index
       strcpy(array[c+1], "");
       countRemoved++;
-      strncpy(tempValue, array[c],BUFFER_MAX_LENGTH + 1);
+      strncpy(temp, v1,buffer);
     }
   }
+
+
   // Create final array
+  char tempValue[BUFFER_MAX_LENGTH + 1];
   char finalarray[lines-countRemoved][BUFFER_MAX_LENGTH+1];
   d=1;
   int countDuplicate = 1;
@@ -178,7 +210,7 @@ int main(int argc, char *argv[]) {
   }
 
   // printf("\nFinal\n");
-  if(hasOpt(argc,argv,'c')==0 && hasOpt(argc,argv,'w')==0 && hasOpt(argc,argv,'i')==0){
+  if(hasOpt(argc,argv,'c')==0){
     normal_output(lines-countRemoved,finalarray);
   }
   return 0;
