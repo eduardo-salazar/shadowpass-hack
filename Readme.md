@@ -1,11 +1,53 @@
 ## Goal
-Please write a tool to break a /etc/shadow line using dictonary attack.
-Download the dictionary file at:
-https://nmsl.cs.nthu.edu.tw/images/courses/CS5432_2016/john.txt .
-Your tool will load this dictionary into memory, and tries to concatenate three words into the plaintext password candidate.
-Use the crypt library to find the actually password of a person. You need to submit both your source file and library.
+Implementation of new utility called suniq.
+First sorts the lines in descending order and then acts the same as uniq.
+The program is able to handle lines up to 256 characters.
+
+## Arguments
+-c:
+  Precede each output line with the count of the number of times the line occurred in the input, followed by a single space.
+
+-i:
+  Case insensitive comparison of lines.
+-w:
+  compare no more than N characters in lines
 
 ## Test Data
-–  bear:$6$naIJPKfO
-    $SMkeSkFM36M6u3mZIyf2hAr31WxuYtoTwLMjF9Fv49cprYPKtR1K88
-    Ox5xvQdLdoBrAOmCnomRvaHc7VDiqQ0:17099:0:99999:7:::
+password
+computer
+tigger
+summer
+internet
+service
+canada
+hello
+ranger
+shadow
+baseball
+donald
+harley
+hockey
+letmein
+maggie
+bare
+mustang
+snoopy
+buster
+dragon
+nthu
+michael
+michelle
+we
+mindy
+patrick
+bears
+andrew
+ppap
+calvin
+changeme
+diamond
+baseball
+baseball
+bears
+we
+We

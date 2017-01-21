@@ -55,7 +55,7 @@ int getOptValue(int argc,char **argv, char op){
 // Implement
 // (DONE)-c Precede each output line with the count of the number of times the line occurred in the input, followed by a single space.
 // (DONE)-i Case insensitive comparison of lines.
-// -w compare no more than N characters in lines
+// (DONE)-w compare no more than N characters in lines
 int main(int argc, char *argv[]) {
   // Reading dictionary john file (john.txt)
   FILE *file = NULL;
