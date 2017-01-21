@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 #define BUFFER_MAX_LENGTH 256
 
 void normal_output(int rows, char p[][BUFFER_MAX_LENGTH+1]){
@@ -39,8 +40,8 @@ int hasOpt(int argc,char **argv, char op){
 
 
 // Implement
-// -c Precede each output line with the count of the number of times the line occurred in the input, followed by a single space.
-// -i Case insensitive comparison of lines.
+// (DONE)-c Precede each output line with the count of the number of times the line occurred in the input, followed by a single space.
+// (DONE)-i Case insensitive comparison of lines.
 // -w compare no more than N characters in lines
 int main(int argc, char *argv[]) {
 
@@ -109,8 +110,14 @@ int main(int argc, char *argv[]) {
           continue;
       }
       else{
-        array[i][tempCharIdx] = (char)tempChar;
-        line[tempCharIdx++] = (char)tempChar;
+
+        if(hasOpt(argc,argv,'i')==1){
+          array[i][tempCharIdx] = tolower((char)tempChar);
+          line[tempCharIdx++] = tolower((char)tempChar);
+        }else{
+          array[i][tempCharIdx] = (char)tempChar;
+          line[tempCharIdx++] = (char)tempChar;
+        }
       }
   }
 
