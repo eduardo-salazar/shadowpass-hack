@@ -33,6 +33,7 @@ int main(void) {
 			exit(0); /* parent from second fork == first child */
 		/* child process*/
 		execUserCommand();
+		exit(0);
 	}
 
 	/* parent */
